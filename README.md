@@ -5,6 +5,8 @@ Live app: https://mugcheck.netlify.app/
 
 Demo video: https://youtu.be/_7i71pWbSgI
 
+Pitch deck: https://docs.google.com/presentation/d/1c0HDdk86097aimVs8bXWJEAWwt8s_V1FnmfxgwGpjVg/view
+
 Contact: therealbryanho@gmail.com
 
 Hackathon Submission for https://blockseblock.com/hackathon_details/7e682d4b-836c-438f-b032-a86d2cb6c1b3
