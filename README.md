@@ -3,7 +3,7 @@
 
 Live app: https://mugcheck.netlify.app/
 
-Demo video: 
+Demo video: https://youtu.be/_7i71pWbSgI
 
 Contact: therealbryanho@gmail.com
 
