@@ -1,0 +1,22 @@
+// Version: 1.0.0
+type Account = {owner : Principal; subaccount : ?Subaccount};
+type Memo = Blob;
+type Subaccount = Blob;
+type Timestamp = Nat64;
+type Tokens = Nat;
+type Transaction =
+  {args : Transfer; fee : Tokens; kind : TxKind; timestamp : Timestamp};
+type Transfer =
+  {
+    amount : Tokens;
+    created_at_time : ?Timestamp;
+    fee : ?Tokens;
+    from : Account;
+    memo : ?Memo;
+    to : Account
+  };
+type TxKind = {#Burn; #Mint; #Transfer};
+actor {
+  stable var max_supply : Nat;
+  stable var persistedLog : [Transaction]
+};

@@ -1,0 +1,67 @@
+type Account = record { owner : principal; subaccount : opt Subaccount };
+type Ledger = service {
+  icrc1_balance_of : (Account) -> (Tokens) query;
+  icrc1_decimals : () -> (nat8) query;
+  icrc1_fee : () -> (nat) query;
+  icrc1_max_supply : () -> (nat) query;
+  icrc1_metadata : () -> (vec record { text; Value }) query;
+  icrc1_mint : (
+      record {
+        to : Account;
+        fee : opt Tokens;
+        memo : opt Memo;
+        secret : text;
+        from_subaccount : opt Subaccount;
+        created_at_time : opt Timestamp;
+        amount : Tokens;
+      },
+    ) -> (TransferResult);
+  icrc1_minting_account : () -> (opt Account) query;
+  icrc1_name : () -> (text) query;
+  icrc1_supported_standards : () -> (
+      vec record { url : text; name : text },
+    ) query;
+  icrc1_symbol : () -> (text) query;
+  icrc1_total_supply : () -> (Tokens) query;
+  icrc1_transfer : (
+      record {
+        to : Account;
+        fee : opt Tokens;
+        memo : opt Memo;
+        from_subaccount : opt Subaccount;
+        created_at_time : opt Timestamp;
+        amount : Tokens;
+      },
+    ) -> (TransferResult);
+};
+type Memo = vec nat8;
+type Subaccount = vec nat8;
+type Timestamp = nat64;
+type Tokens = nat;
+type TransferError = variant {
+  GenericError : record { message : text; error_code : nat };
+  TemporarilyUnavailable;
+  BadBurn : record { min_burn_amount : Tokens };
+  Duplicate : record { duplicate_of : TxIndex };
+  JustBad;
+  BadFee : record { expected_fee : Tokens };
+  CreatedInFuture : record { ledger_time : Timestamp };
+  TooOld;
+  InsufficientFunds : record { balance : Tokens };
+};
+type TransferResult = variant { Ok : TxIndex; Err : TransferError };
+type TxIndex = nat;
+type Value = variant { Int : int; Nat : nat; Blob : vec nat8; Text : text };
+service : (
+  record {
+    decimals : nat8;
+    token_symbol : text;
+    transfer_fee : nat;
+    minting_account : record { owner : principal; subaccount : opt vec nat8 };
+    initial_mints : vec record {
+      account : record { owner : principal; subaccount : opt vec nat8 };
+      amount : nat;
+    };
+    token_name : text;
+  },
+) -> Ledger
